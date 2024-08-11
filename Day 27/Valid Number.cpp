@@ -1,5 +1,16 @@
 // https://leetcode.com/problems/valid-number/description/
 
+enum STATE {
+    INIT, I1, I2, I3, I4, I5, S1, S2, S3
+};
+
+bool isNum(char ch) {
+    return ch >= 48 && ch <= 57;
+}
+class Solution {
+public:
+
+
     bool isTrueState(STATE s) {
         return s == S1 || s == S2 || s == S3;
     }
