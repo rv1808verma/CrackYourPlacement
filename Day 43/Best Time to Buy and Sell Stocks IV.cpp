@@ -1,22 +1,20 @@
 // https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/
 
     int maxProfit(int k, vector<int>& prices) {
-        vector<vector<int>> curr(k1+1,vector<int>(2,0));
-        vector<vector<int>> prev(k1+1,vector<int>(2,0));
-        int ans=0;
-        for(int k=1;k<=k1;k++) prev[k][0]=-v[0];
-        for(int i=1;i<v.size();i++)
-        {
-            for(int k=1;k<=k1;k++)
-            {
-                curr[k][0]=max(prev[k-1][1]-v[i],prev[k][0]);
+        int n=prices.size();
+        int transactions=2*k;
+        vector<vector<int>>dp(n+1,vector<int>(transactions+1,0));
+        for(int index=n-1;index>=0;index--){
+            for(int transaction=transactions-1;transaction>=0;transaction--){
+                if(transaction%2==0){
+                    dp[index][transaction]=max(-prices[index]+dp[index+1]
+                    [transaction+1],dp[index+1][transaction]);
+                }
+                else{
+                    dp[index][transaction]=max(prices[index]+dp[index+1]
+                    [transaction+1],dp[index+1][transaction]);
+                }
             }
-            for(int k=1;k<=k1;k++)
-            {
-                curr[k][1]=max(prev[k][0]+v[i],prev[k][1]);
-                ans=max(ans,curr[k][1]);
-            }
-            prev=curr;
         }
-        return ans;    
+        return dp[0][0];  
     }
